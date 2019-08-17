@@ -11,10 +11,19 @@ const Calculator = () => {
   const [oldNum, setOldNum] = useState(undefined);
   const [newNum, setNewNum] = useState("0");
   const [operator, setOperator] = useState(undefined);
+  const [isThereADot, setIsThereADot] = useState(false);
 
   const addNumber = (number) => {
-    if (newNum == "0" && number != ".") {
+    if (newNum == "0" && number == ".") {
+      setNewNum(newNum + number);
+      setIsThereADot(true);
+    }
+    else if (newNum == "0") {
       setNewNum(number);
+    }
+    else if (number == ".") {
+      setNewNum(newNum + number);
+      setIsThereADot(true);
     }
     else {
       setNewNum(newNum + number);
@@ -42,7 +51,7 @@ const Calculator = () => {
       <OperationTile/>
       {/* the zero prop is used by css */}
       <NumberTile number="0" zero={true} add={addNumber}/>
-      <NumberTile number="." add={addNumber}/>
+      <NumberTile number="." zero={false} add={addNumber} dot={isThereADot}/>
       <OperationTile/>
     </div>
   )
